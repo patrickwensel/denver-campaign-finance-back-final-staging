@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: qa-donet-app
+  name: qa-donet-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qa-donet-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: qa-donet-app
+    spec:
+      containers:
+      - image: denverqaregistry.azurecr.io/repository:#{Build.BuildId}#
+        name: qa-donet-app
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+          - containerPort: 80
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: qa-dotnet-svc
+  labels: 
+    run: qa-dotnet-svc
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: qa-donet-app

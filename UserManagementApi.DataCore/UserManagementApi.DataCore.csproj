@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Npgsql" Version="5.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Denver.DataAccess\Denver.DataAccess.csproj" />
+    <ProjectReference Include="..\UserManagementApi.Domain\UserManagementApi.Domain.csproj" />
+    <ProjectReference Include="..\Utility\Denver.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DBScripts\Schema\Triggers\" />
+  </ItemGroup>
+
+</Project>

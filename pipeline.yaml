@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: donet-app
+  name: donet-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: donet-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: donet-app
+    spec:
+      containers:
+      - image: denvertestregistry.azurecr.io/repository:#{Build.BuildId}#
+        name: donet-app
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+          - containerPort: 80
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-svc
+  labels: 
+    run: dotnet-svc
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: donet-app

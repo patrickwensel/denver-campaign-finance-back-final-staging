@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stg-donet-app
+  name: stg-donet-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stg-donet-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: stg-donet-app
+    spec:
+      containers:
+      - image: denverstgregistry.azurecr.io/repository:#{Build.BuildId}#
+        name: stg-donet-app
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+          - containerPort: 80
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: stg-dotnet-svc
+  labels: 
+    run: stg-dotnet-svc
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: stg-donet-app
